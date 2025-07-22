@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #c3b4fb 0%, #a49cdc 50%, #a4a4dc 100%);
+            background: linear-gradient(135deg, #a4a4dc 0%, #a49cdc 50%, #dcd4fc 100%);
             min-height: 100vh;
             overflow-x: hidden;
             color: white;
@@ -138,7 +138,7 @@
             font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 800;
             margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, #fff, #dcd4fc, #c3b4fb);
+            background: linear-gradient(45deg, #fff, #ccc0fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -430,7 +430,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: #c3b4fb;
+            color: #a49cdc;
         }
 
         /* Footer */
@@ -612,6 +612,21 @@
             line-height: 1.6;
             opacity: 0.9;
         }
+    .hero-logo {
+            width: clamp(250px, 45vw, 600px);
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 2rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.25));
+        }
+        .replace-word {
+            color: #3E7CE0;
+            font-weight: 700;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -633,11 +648,12 @@
     <!-- Section Hero -->
     <section class="hero">
         <div class="hero-content">
+            <img src="https://i.ibb.co/hJrD67FN/Design-sans-titre-5-Photoroom.png" alt="Cognalys Logo" class="hero-logo">
             <h1>Révolutionnez votre Support Client avec l'IA</h1>
-            <p class="hero-subtitle">CognalysIntelligence propose à Iara une solution de chatbot intelligente pour améliorer l'expérience client et optimiser vos opérations.</p>
+            <p class="hero-subtitle">Cognalys Intelligence propose à Iara une solution de chatbot intelligent pour améliorer l'expérience client et optimiser vos opérations.</p>
             
             <div class="value-proposition">
-                <p><strong>🚀 Test gratuit sans risque</strong> - Nous déployons notre chatbot sur notre infrastructure privée avec vos données (FAQ, informations site, etc.) pour une phase de test complète sans toucher à vos systèmes existants.</p>
+                <p><strong>🚀 Test gratuit sans risque</strong> - Nous déployons notre chatbot sur notre infrastructure privée avec vos données publiquement accessibles (FAQ, informations site, etc.) pour une phase de test complète sans toucher à vos systèmes existants.</p>
             </div>
             
             <a href="#demo" class="cta-button">
@@ -652,7 +668,7 @@
         <div class="chat-container">
             <div class="chat-header">
                 <h2>Démonstration Interactive</h2>
-                <p>Testez dès maintenant notre chatbot intelligent. Posez vos questions comme le feraient vos clients !</p>
+                <p>Testez dès maintenant <span class="replace-word">notre</span> chatbot intelligent. Posez vos questions comme le feraient vos client(e)s&nbsp;!</p>
             </div>
             <div class="chat-widget-container">
                 <div class="chat-messages" id="chatMessages">
@@ -669,7 +685,7 @@
                     <span>L'assistant écrit...</span>
                 </div>
                 <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Posez vos questions comme un client IARA..." maxlength="500">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Posez vos questions comme un(e) client(e) Iara..." maxlength="500">
                     <button class="send-button" id="sendButton">Envoyer</button>
                 </div>
             </div>
@@ -678,7 +694,6 @@
 
     <section class="about-section">
         <div class="about-container">
-            <img src="https://i.ibb.co/hJrD67FN/Design-sans-titre-5-Photoroom.png" alt="Cognalys Logo" class="about-logo">
             <h2>Qui sommes-nous&nbsp;?</h2>
             <p>Nous sommes une agence spécialisée dans le développement de solutions d’automatisation sur mesure, enrichies par l’intelligence artificielle. Nous concevons et intégrons des systèmes personnalisés répondant précisément à vos besoins métiers : automatisation comptable, gestion intelligente des relances, secrétariat virtuel optimisé ou encore gestion avancée des plannings avec des agents IA. Notre objectif est de transformer vos processus internes pour gagner en efficacité et en productivité.</p>
         </div>
@@ -730,7 +745,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2025 CognalysIntelligence × IARA - Repensons vos systèmes avec Intelligence</p>
+        <p>&copy; 2025 CognalysIntelligence - Repensons vos systèmes avec Intelligence</p>
         <p>Solution chatbot intelligente sur infrastructure privée sécurisée</p>
     </footer>
 
@@ -980,6 +995,53 @@
             });
         }
 
+        // Animation remplacement mot "notre" -> "votre"
+        function animateWordReplacement(cb) {
+            const el = document.querySelector('.replace-word');
+            if (!el) return;
+            const original = 'notre';
+            const target = 'votre';
+            let index = original.length;
+
+            function deleteLetters() {
+                if (index >= 0) {
+                    el.textContent = original.substring(0, index);
+                    index--;
+                    setTimeout(deleteLetters, 120);
+                } else {
+                    index = 0;
+                    typeLetters();
+                }
+            }
+
+            function typeLetters() {
+                if (index <= target.length) {
+                    el.textContent = target.substring(0, index);
+                    index++;
+                    setTimeout(typeLetters, 120);
+                } else if (cb) {
+                    cb();
+                }
+            }
+
+            deleteLetters();
+        }
+
+        function observeWordReplacement() {
+            const el = document.querySelector('.replace-word');
+            if (!el) return;
+            let isAnimating = false;
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !isAnimating) {
+                        isAnimating = true;
+                        animateWordReplacement(() => { isAnimating = false; });
+                    }
+                });
+            }, { threshold: 0.8 });
+            observer.observe(el);
+        }
+
         // Initialisation de l'application
         document.addEventListener('DOMContentLoaded', function() {
             // Créer les particules
@@ -987,6 +1049,7 @@
             
             // Initialiser les observateurs
             observeElements();
+            observeWordReplacement();
             
             // Configurer le smooth scroll
             setupSmoothScroll();
