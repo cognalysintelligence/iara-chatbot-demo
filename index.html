@@ -19,7 +19,7 @@
             color: white;
         }
 
-        /* Particules d'arrière-plan animées */
+        /* Particules d'arrière-plan optimisées */
         .particles {
             position: fixed;
             top: 0;
@@ -37,6 +37,7 @@
             background: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             animation: float 20s infinite linear;
+            will-change: transform;
         }
 
         @keyframes float {
@@ -56,7 +57,7 @@
             }
         }
 
-        /* Navigation simplifiée */
+        /* Navigation optimisée */
         .nav {
             position: fixed;
             top: 0;
@@ -66,7 +67,8 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
             padding: 1rem 2rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: background, box-shadow;
         }
 
         .nav-container {
@@ -111,10 +113,11 @@
             background: linear-gradient(45deg, #4A90E2, #357ABD);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-weight: 700;
         }
 
-        /* Section Hero */
+        /* Section Hero optimisée */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -128,7 +131,7 @@
 
         .hero-content {
             max-width: 900px;
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .hero h1 {
@@ -138,6 +141,7 @@
             background: linear-gradient(45deg, #fff, #a8edea, #fed6e3);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             line-height: 1.1;
         }
 
@@ -166,12 +170,13 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            will-change: transform;
         }
 
         .cta-button:hover {
@@ -179,7 +184,7 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        /* Chat Interface */
+        /* Chat Interface - Design personnalisé */
         .chat-section {
             padding: 3rem 1rem;
             max-width: 1200px;
@@ -195,7 +200,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 2rem;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 0.8s ease-out 0.3s both;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
         }
 
         .chat-header {
@@ -210,16 +215,141 @@
             background: linear-gradient(45deg, #fff, #a8edea);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .chat-widget-container {
             min-height: 500px;
             border-radius: 20px;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
-        /* Features Section */
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1.2rem;
+            border-radius: 18px;
+            word-wrap: break-word;
+            animation: messageSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            color: white;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .chat-input:focus {
+            border-color: #4A90E2;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .send-button {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            max-width: fit-content;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.3; }
+            30% { opacity: 1; }
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Section optimisée */
         .features {
             padding: 3rem 1rem;
             max-width: 1200px;
@@ -236,11 +366,12 @@
             background: linear-gradient(45deg, #fff, #a8edea);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
             margin-bottom: 3rem;
         }
@@ -251,8 +382,9 @@
             border-radius: 20px;
             padding: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            will-change: transform;
         }
 
         .feature-card:hover {
@@ -312,7 +444,7 @@
             z-index: 2;
         }
 
-        /* Animations */
+        /* Animations optimisées */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -324,7 +456,7 @@
             }
         }
 
-        /* Responsive Design */
+        /* Responsive Design amélioré */
         @media (max-width: 768px) {
             .nav {
                 padding: 0.8rem 1rem;
@@ -343,6 +475,7 @@
 
             .hero {
                 padding: 5rem 1rem 2rem;
+                min-height: 100vh;
             }
 
             .value-proposition {
@@ -353,6 +486,15 @@
             .chat-container {
                 margin: 1rem;
                 padding: 1.5rem;
+            }
+
+            .chat-messages {
+                height: 300px;
+            }
+
+            .message {
+                max-width: 90%;
+                font-size: 0.9rem;
             }
 
             .features-grid {
@@ -372,6 +514,14 @@
                 padding: 1rem 2rem;
                 font-size: 1rem;
             }
+
+            .chat-input-container {
+                padding: 0.8rem;
+            }
+
+            .chat-input {
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -390,14 +540,46 @@
             .feature-card {
                 padding: 1rem;
             }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .partnership-logo {
+                flex-direction: column;
+                gap: 0.3rem;
+                font-size: 0.9rem;
+            }
+
+            .collaboration-x {
+                display: none;
+            }
         }
 
-        /* Chat widget styles */
-        .chat-widget {
-            width: 100%;
-            height: 500px;
-            border: none;
-            border-radius: 15px;
+        /* Optimisations de performance */
+        .hero-content,
+        .feature-card,
+        .chat-container {
+            transform: translateZ(0);
+        }
+
+        /* Scrollbar personnalisée pour le chat */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
@@ -444,7 +626,23 @@
                 <p>Testez dès maintenant notre chatbot intelligent. Posez vos questions comme le feraient vos clients !</p>
             </div>
             <div class="chat-widget-container">
-                <div id="n8n-chat"></div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        👋 Bonjour ! Je suis l'assistant IARA. Comment puis-je vous aider aujourd'hui ?
+                    </div>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                    <span>L'assistant écrit...</span>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Posez vos questions comme un client IARA..." maxlength="500">
+                    <button class="send-button" id="sendButton">Envoyer</button>
+                </div>
             </div>
         </div>
     </section>
@@ -499,43 +697,115 @@
         <p>Solution chatbot intelligente sur infrastructure privée sécurisée</p>
     </footer>
 
-    <!-- N8N Chat Integration -->
-    <script type="module">
-        import '@n8n/chat/style.css';
-        import { createChat } from '@n8n/chat';
+    <script>
+        // Configuration du chat N8N
+        const WEBHOOK_URL = 'https://n8n.srv860531.hstgr.cloud/webhook/8d968a8e-cac7-4025-9dcb-04860beef267/chat';
+        let sessionId = 'iara-demo-' + Math.random().toString(36).substring(7);
+        
+        // Éléments du DOM
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
 
-        createChat({
-            webhookUrl: 'https://n8n.srv860531.hstgr.cloud/webhook/8d968a8e-cac7-4025-9dcb-04860beef267/chat',
-            target: '#n8n-chat',
-            mode: 'window',
-            chatInputPlaceholder: 'Posez vos questions comme un client IARA...',
-            loadPreviousSession: true,
-            chatSessionKey: 'iara-demo-session',
-            defaultHeight: '500px',
-            defaultWidth: '100%',
-            showWelcomeScreen: true,
-            welcomeScreenOptions: {
-                title: 'Assistant IARA Demo',
-                subtitle: 'Posez vos questions sur les services IARA',
-                footer: 'Propulsé par CognalysIntelligence'
-            },
-            theme: {
-                primaryColor: '#9587f7',
-                secondaryColor: '#4A90E2',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                textColor: '#ffffff',
-                chatInputBackgroundColor: 'rgba(255, 255, 255, 0.1)',
-                chatInputBorderColor: 'rgba(255, 255, 255, 0.2)'
+        // Fonction pour ajouter un message au chat
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            messageDiv.textContent = content;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Fonction pour envoyer un message au webhook N8N
+        async function sendMessageToN8N(message) {
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'sendMessage',
+                        sessionId: sessionId,
+                        chatInput: message,
+                        loadPreviousSession: true
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.output || data.response || data.message || "Je suis désolé, je n'ai pas pu traiter votre demande.";
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi du message:', error);
+                return "Je rencontre actuellement des difficultés techniques. Veuillez réessayer dans quelques instants.";
+            }
+        }
+
+        // Fonction pour afficher l'indicateur de frappe
+        function showTypingIndicator() {
+            typingIndicator.style.display = 'flex';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Fonction pour masquer l'indicateur de frappe
+        function hideTypingIndicator() {
+            typingIndicator.style.display = 'none';
+        }
+
+        // Fonction pour envoyer un message
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Désactiver l'input et le bouton
+            chatInput.disabled = true;
+            sendButton.disabled = true;
+            
+            // Ajouter le message de l'utilisateur
+            addMessage(message, true);
+            chatInput.value = '';
+
+            // Afficher l'indicateur de frappe
+            showTypingIndicator();
+
+            // Envoyer le message à N8N
+            const botResponse = await sendMessageToN8N(message);
+            
+            // Masquer l'indicateur de frappe
+            hideTypingIndicator();
+            
+            // Ajouter la réponse du bot avec un délai réaliste
+            setTimeout(() => {
+                addMessage(botResponse);
+                
+                // Réactiver l'input et le bouton
+                chatInput.disabled = false;
+                sendButton.disabled = false;
+                chatInput.focus();
+            }, 500);
+        }
+
+        // Event listeners pour le chat
+        sendButton.addEventListener('click', sendMessage);
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
             }
         });
-    </script>
 
-    <script>
-        // Création des particules animées
+        // Création des particules optimisée
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const numParticles = window.innerWidth < 768 ? 20 : 50;
+            const numParticles = window.innerWidth < 768 ? 15 : 30;
 
+            // Limiter le nombre de particules pour améliorer les performances
             for (let i = 0; i < numParticles; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -546,20 +816,28 @@
             }
         }
 
-        // Effet de parallaxe pour le hero
+        // Effet de parallaxe optimisé avec throttling
+        let ticking = false;
+        
         function parallaxEffect() {
-            if (window.innerWidth > 768) {
-                const hero = document.querySelector('.hero');
-                const scrolled = window.pageYOffset;
-                const rate = scrolled * -0.3;
-                
-                if (hero) {
-                    hero.style.transform = `translateY(${rate}px)`;
-                }
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    if (window.innerWidth > 768) {
+                        const hero = document.querySelector('.hero');
+                        const scrolled = window.pageYOffset;
+                        const rate = scrolled * -0.2; // Réduit l'effet pour plus de fluidité
+                        
+                        if (hero) {
+                            hero.style.transform = `translateY(${rate}px)`;
+                        }
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         }
 
-        // Effet glassmorphique sur la navigation au scroll
+        // Effet glassmorphique sur la navigation optimisé
         function navScrollEffect() {
             const nav = document.querySelector('.nav');
             if (window.scrollY > 50) {
@@ -571,17 +849,24 @@
             }
         }
 
-        // Animations d'intersection
+        // Animations d'intersection optimisées
         function observeElements() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.style.animationPlayState = 'running';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
                     }
                 });
+            }, {
+                threshold: 0.1,
+                rootMargin: '50px'
             });
 
             document.querySelectorAll('.feature-card, .chat-container, .offer-section').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
                 observer.observe(el);
             });
         }
@@ -603,41 +888,145 @@
             });
         }
 
-        // Gestion du redimensionnement
+        // Gestion du redimensionnement optimisée
+        let resizeTimeout;
         function handleResize() {
-            // Recréer les particules si nécessaire
-            const particles = document.querySelectorAll('.particle');
-            const expectedCount = window.innerWidth < 768 ? 20 : 50;
-            if (particles.length !== expectedCount) {
-                document.getElementById('particles').innerHTML = '';
-                createParticles();
-            }
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                // Recréer les particules si nécessaire
+                const particles = document.querySelectorAll('.particle');
+                const expectedCount = window.innerWidth < 768 ? 15 : 30;
+                if (particles.length !== expectedCount) {
+                    document.getElementById('particles').innerHTML = '';
+                    createParticles();
+                }
+            }, 250);
         }
 
-        // Initialisation
+        // Throttle fonction pour optimiser les performances
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        }
+
+        // Fonction d'initialisation du chat N8N
+        function initializeChat() {
+            // Envoyer un message d'initialisation pour établir la session
+            setTimeout(() => {
+                sendMessageToN8N('init').catch(error => {
+                    console.log('Initialisation du chat N8N:', error);
+                });
+            }, 1000);
+        }
+
+        // Fonction pour gérer les erreurs de connexion
+        function handleConnectionError() {
+            addMessage("⚠️ Connexion temporairement indisponible. Notre équipe technique travaille sur le problème. Vous pouvez nous contacter directement pour toute urgence.");
+        }
+
+        // Vérification périodique de la connexion
+        function checkConnection() {
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'ping', sessionId: sessionId })
+            }).catch(() => {
+                console.log('Vérification de connexion N8N');
+            });
+        }
+
+        // Initialisation de l'application
         document.addEventListener('DOMContentLoaded', function() {
+            // Créer les particules
             createParticles();
+            
+            // Initialiser les observateurs
             observeElements();
+            
+            // Configurer le smooth scroll
             setupSmoothScroll();
+            
+            // Initialiser le chat
+            initializeChat();
+            
+            // Vérifier la connexion périodiquement
+            setInterval(checkConnection, 60000); // Chaque minute
+            
+            // Focus sur l'input du chat
+            chatInput.focus();
         });
 
-        // Event listeners
-        window.addEventListener('scroll', () => {
+        // Event listeners optimisés
+        window.addEventListener('scroll', throttle(() => {
             parallaxEffect();
             navScrollEffect();
-        });
+        }, 16)); // ~60fps
 
         window.addEventListener('resize', handleResize);
 
-        // Effet hover sur les cartes de fonctionnalités
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.background = 'rgba(255, 255, 255, 0.15)';
+        // Effet hover optimisé sur les cartes de fonctionnalités
+        document.addEventListener('DOMContentLoaded', function() {
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.background = 'rgba(255, 255, 255, 0.15)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.background = 'rgba(255, 255, 255, 0.1)';
+                });
             });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.background = 'rgba(255, 255, 255, 0.1)';
-            });
+        });
+
+        // Optimisation pour les appareils mobiles
+        if ('ontouchstart' in window) {
+            // Désactiver le parallaxe sur mobile pour de meilleures performances
+            document.body.style.setProperty('--parallax-enabled', '0');
+        }
+
+        // Précharger les ressources critiques
+        function preloadCriticalResources() {
+            const link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = 'https://n8n.srv860531.hstgr.cloud';
+            document.head.appendChild(link);
+        }
+
+        // Gestion des erreurs globales
+        window.addEventListener('error', function(e) {
+            console.error('Erreur JavaScript:', e.error);
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Promise rejetée:', e.reason);
+        });
+
+        // Initialiser le préchargement
+        preloadCriticalResources();
+
+        // Amélioration de l'accessibilité
+        document.addEventListener('keydown', function(e) {
+            // Navigation au clavier pour le chat
+            if (e.target === chatInput && e.key === 'Escape') {
+                chatInput.blur();
+            }
+        });
+
+        // Performance monitoring basique
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+                    console.log('Page rechargée');
+                }
+            }, 1000);
         });
     </script>
 </body>
