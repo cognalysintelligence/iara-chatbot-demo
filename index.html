@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IARA × CognalysIntelligence - Démonstration Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, rgb(149, 135, 247) 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Particules d'arrière-plan animées */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header avec logos */
+        .header {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .partnership-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .iara-logo {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .iara-icon {
+            width: 50px;
+            height: 50px;
+            background: rgb(149, 135, 247);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .iara-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .partnership-x {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .cognalys-logo {
+            color: white;
+            text-align: center;
+        }
+
+        .cognalys-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .cognalys-brand .intelligence {
+            color: #4A90E2;
+        }
+
+        .cognalys-tagline {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* Section Hero */
+        .hero {
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #fff, #a8edea, #fed6e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .value-proposition {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .value-proposition h3 {
+            color: #a8edea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Chat Interface */
+        .chat-section {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .chat-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.bot .message-content {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-input-container {
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-form {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .send-button {
+            padding: 1rem 1.5rem;
+            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(74, 144, 226, 0.4);
+        }
+
+        .send-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            max-width: 120px;
+            margin-bottom: 1rem;
+        }
+
+        .typing-indicator.show {
+            display: flex;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #666;
+            animation: pulse 1.5s infinite;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes pulse {
+            0%, 60%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            30% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #fff, #a8edea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #a8edea;
+        }
+
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            padding: 3rem 2rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #a8edea;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .partnership-logos {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .partnership-x {
+                transform: rotate(90deg);
+            }
+
+            .chat-input-form {
+                flex-direction: column;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particules animées -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header avec logos -->
+    <header class="header">
+        <div class="partnership-logos">
+            <div class="iara-logo">
+                <div class="iara-icon">🧚</div>
+                <div class="iara-text">iara</div>
+            </div>
+            
+            <div class="partnership-x">×</div>
+            
+            <div class="cognalys-logo">
+                <div class="cognalys-brand">
+                    Cognalys<span class="intelligence">Intelligence</span>
+                </div>
+                <div class="cognalys-tagline">Repensons vos systèmes Avec Intelligence</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section Hero -->
+    <section class="hero">
+        <h1>Testez notre Chatbot Intelligent</h1>
+        <p>Découvrez comment notre IA peut révolutionner votre service client. Un chatbot capable de discuter, conseiller et convertir vos clients, tout en restant sur notre infrastructure privée.</p>
+        
+        <div class="value-proposition">
+            <h3>🎯 Notre Proposition</h3>
+            <p>Nous cherchons à tester nos bots dans des conditions réelles, sans toucher à vos outils. Tout reste chez nous, sur notre infrastructure privée, c'est juste pour la phase de test. Si ça vous dit, on peut vous en monter un <strong>gratuitement</strong> avec vos données (FAQ, infos disponibles sur votre site, etc.).</p>
+            <br>
+            <p><strong>Bonus :</strong> Le bot sait transférer à un humain quand c'est nécessaire et peut analyser les messages pour vous sortir les problèmes récurrents sous forme de résumés hebdomadaires, journaliers ou mensuels.</p>
+        </div>
+    </section>
+
+    <!-- Interface de Chat -->
+    <section class="chat-section">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>💬 Testez notre Chatbot en Direct</h2>
+                <p>Posez vos questions et découvrez la puissance de notre IA</p>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="message-content">
+                        👋 Bonjour ! Je suis un chatbot CognalysIntelligence. Posez-moi vos questions sur nos services, je peux vous aider avec vos demandes clients, vous donner des conseils, ou même vous aider dans vos décisions d'achat. Comment puis-je vous aider aujourd'hui ?
+                    </div>
+                </div>
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <span style="margin-left: 0.5rem; font-size: 0.9rem; color: #666;">Le bot écrit...</span>
+            </div>
+            
+            <div class="chat-input-container">
+                <form class="chat-input-form" id="chatForm">
+                    <input 
+                        type="text" 
+                        class="chat-input" 
+                        id="messageInput"
+                        placeholder="Tapez votre message ici..."
+                        required
+                    >
+                    <button type="submit" class="send-button" id="sendButton">
+                        Envoyer →
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Pourquoi choisir notre Chatbot ?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>Réponses Intelligentes</h3>
+                <p>Notre IA comprend le contexte et fournit des réponses pertinentes adaptées à chaque situation client.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Transfert vers Humain</h3>
+                <p>Quand la situation devient complexe, le bot transfère intelligemment vers un agent humain.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Analyses & Résumés</h3>
+                <p>Recevez des résumés hebdomadaires des questions et plaintes clients pour identifier les points d'amélioration.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🕐</div>
+                <h3>Disponible 24/7</h3>
+                <p>Vos clients obtiennent des réponses instantanées, même en dehors des heures ouvrables.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Réduction des Coûts</h3>
+                <p>Diminuez la charge sur votre équipe support tout en maintenant un service de qualité.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Augmentation des Ventes</h3>
+                <p>Le bot peut conseiller et guider vos visiteurs vers l'achat, optimisant votre taux de conversion.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <h2>Prêt à tester gratuitement ?</h2>
+        <p>Contactez-nous pour installer votre chatbot de démonstration avec vos propres données.<br>
+        Test gratuit, aucun engagement, sur notre infrastructure.</p>
+    </section>
+
+    <script>
+        const WEBHOOK_URL = 'https://n8n.srv860531.hstgr.cloud/webhook/8d968a8e-cac7-4025-9dcb-04860beef267/chat';
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const chatForm = document.getElementById('chatForm');
+
+        // Création des particules animées
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numParticles = 30;
+
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Fonction pour ajouter un message au chat
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.textContent = content;
+            
+            messageDiv.appendChild(messageContent);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll vers le bas
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Fonction pour envoyer un message
+        async function sendMessage(message) {
+            try {
+                sendButton.disabled = true;
+                sendButton.textContent = 'Envoi...';
+                
+                // Afficher l'indicateur de frappe
+                typingIndicator.classList.add('show');
+                
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        timestamp: new Date().toISOString(),
+                        userId: 'demo-user-' + Math.random().toString(36).substr(2, 9)
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                // Cacher l'indicateur de frappe
+                typingIndicator.classList.remove('show');
+                
+                // Ajouter la réponse du bot
+                const botResponse = data.response || data.message || "Désolé, je n'ai pas pu traiter votre demande.";
+                
+                // Simuler un délai de réponse réaliste
+                setTimeout(() => {
+                    addMessage(botResponse, false);
+                }, 500);
+
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi du message:', error);
+                
+                // Cacher l'indicateur de frappe
+                typingIndicator.classList.remove('show');
+                
+                // Message d'erreur par défaut
+                setTimeout(() => {
+                    addMessage("Désolé, je rencontre un problème technique. En tant que chatbot de démonstration, je peux vous expliquer nos services : nous créons des bots intelligents capables de gérer vos clients 24/7, de les conseiller et même de les convertir. Voulez-vous en savoir plus sur nos capacités ?", false);
+                }, 500);
+            } finally {
+                sendButton.disabled = false;
+                sendButton.textContent = 'Envoyer →';
+            }
+        }
+
+        // Gestionnaire de soumission du formulaire
+        chatForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // Ajouter le message de l'utilisateur
+            addMessage(message, true);
+            
+            // Vider le champ de saisie
+            messageInput.value = '';
+            
+            // Envoyer le message
+            await sendMessage(message);
+        });
+
+        // Permettre l'envoi avec Entrée
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                chatForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            // Focus automatique sur le champ de saisie
+            messageInput.focus();
+        });
+
+        // Effet de parallaxe léger
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const particles = document.querySelector('.particles');
+            if (particles) {
+                particles.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
