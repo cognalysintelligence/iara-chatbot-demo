@@ -474,7 +474,7 @@
             }
 
             .hero {
-                padding: 5rem 1rem 2rem;
+                padding: 6rem 1rem 2rem;
                 min-height: 100vh;
             }
 
@@ -525,8 +525,16 @@
         }
 
         @media (max-width: 480px) {
+            .hero-logo { width: 70vw; }
+            .chat-container { margin: 0.5rem; padding: 1rem; }
+
+            /* Réorganisation du widget de chat pour mobile */
+            .chat-widget-container { display:flex; flex-direction: column; height: 75vh; }
+            .chat-messages { flex: 1; height: auto; }
+            .chat-input-container { margin-top: auto; }
+
             .hero {
-                padding: 4rem 1rem 1rem;
+                padding: 6rem 1rem 1rem; /* plus d'espace pour le menu fixe */
             }
 
             .hero-subtitle {
@@ -1060,8 +1068,8 @@
             // Vérifier la connexion périodiquement
             setInterval(checkConnection, 60000); // Chaque minute
             
-            // Focus sur l'input du chat
-            chatInput.focus();
+            // Suppression du focus automatique qui provoquait un scroll en milieu de page
+            // chatInput.focus();
         });
 
         // Event listeners optimisés
