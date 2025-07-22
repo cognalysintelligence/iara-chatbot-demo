@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #9587f7 0%, #667eea 50%, #764ba2 100%);
+            background: linear-gradient(135deg, #c3b4fb 0%, #a49cdc 50%, #a4a4dc 100%);
             min-height: 100vh;
             overflow-x: hidden;
             color: white;
@@ -96,7 +96,7 @@
         .iara-icon {
             width: 40px;
             height: 40px;
-            background: #9587f7;
+            background: #c3b4fb;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -110,7 +110,7 @@
         }
 
         .logo-cognalys {
-            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            background: linear-gradient(45deg, #c3b4fb, #a49cdc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -138,7 +138,7 @@
             font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 800;
             margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, #fff, #a8edea, #fed6e3);
+            background: linear-gradient(45deg, #fff, #dcd4fc, #c3b4fb);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -162,7 +162,7 @@
         }
 
         .cta-button {
-            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            background: linear-gradient(45deg, #c3b4fb, #a49cdc);
             color: white;
             padding: 1.2rem 3rem;
             border: none;
@@ -212,7 +212,7 @@
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #fff, #a8edea);
+            background: linear-gradient(45deg, #fff, #dcd4fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -245,7 +245,7 @@
 
         .message.user {
             align-self: flex-end;
-            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            background: linear-gradient(45deg, #c3b4fb, #a49cdc);
             color: white;
         }
 
@@ -281,13 +281,13 @@
         }
 
         .chat-input:focus {
-            border-color: #4A90E2;
+            border-color: #a49cdc;
             background: rgba(255, 255, 255, 0.15);
         }
 
         .send-button {
             padding: 0.8rem 1.5rem;
-            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            background: linear-gradient(45deg, #c3b4fb, #a49cdc);
             color: white;
             border: none;
             border-radius: 25px;
@@ -363,7 +363,7 @@
             font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 700;
             margin-bottom: 3rem;
-            background: linear-gradient(45deg, #fff, #a8edea);
+            background: linear-gradient(45deg, #fff, #dcd4fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -397,7 +397,7 @@
             width: 60px;
             height: 60px;
             border-radius: 15px;
-            background: linear-gradient(45deg, #4A90E2, #357ABD);
+            background: linear-gradient(45deg, #c3b4fb, #a49cdc);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -430,7 +430,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: #a8edea;
+            color: #c3b4fb;
         }
 
         /* Footer */
@@ -581,6 +581,37 @@
         .chat-messages::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.5);
         }
+        .about-section {
+            padding: 4rem 1rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .about-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .about-logo {
+            width: 200px;
+            max-width: 60%;
+            height: auto;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.2));
+        }
+        .about-section h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #dcd4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -592,11 +623,9 @@
         <div class="nav-container">
             <div class="partnership-logo">
                 <div class="logo-iara">
-                    <div class="iara-icon">🧚</div>
-                    <span style="color: #9587f7;">iara</span>
+                    <img src="https://i.ibb.co/xqkFN5Zz/logo-9ddc0f13.png" alt="IARA Logo" style="height:40px;">
                 </div>
-                <span class="collaboration-x">×</span>
-                <div class="logo-cognalys">CognalysIntelligence</div>
+                </div>
             </div>
         </div>
     </nav>
@@ -605,7 +634,7 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Révolutionnez votre Support Client avec l'IA</h1>
-            <p class="hero-subtitle">CognalysIntelligence propose à IARA une solution de chatbot intelligente pour améliorer l'expérience client et optimiser vos opérations.</p>
+            <p class="hero-subtitle">CognalysIntelligence propose à Iara une solution de chatbot intelligente pour améliorer l'expérience client et optimiser vos opérations.</p>
             
             <div class="value-proposition">
                 <p><strong>🚀 Test gratuit sans risque</strong> - Nous déployons notre chatbot sur notre infrastructure privée avec vos données (FAQ, informations site, etc.) pour une phase de test complète sans toucher à vos systèmes existants.</p>
@@ -644,6 +673,14 @@
                     <button class="send-button" id="sendButton">Envoyer</button>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="about-container">
+            <img src="https://i.ibb.co/hJrD67FN/Design-sans-titre-5-Photoroom.png" alt="Cognalys Logo" class="about-logo">
+            <h2>Qui sommes-nous&nbsp;?</h2>
+            <p>Nous sommes une agence spécialisée dans le développement de solutions d’automatisation sur mesure, enrichies par l’intelligence artificielle. Nous concevons et intégrons des systèmes personnalisés répondant précisément à vos besoins métiers : automatisation comptable, gestion intelligente des relances, secrétariat virtuel optimisé ou encore gestion avancée des plannings avec des agents IA. Notre objectif est de transformer vos processus internes pour gagner en efficacité et en productivité.</p>
         </div>
     </section>
 
@@ -693,7 +730,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 CognalysIntelligence × IARA - Repensons vos systèmes avec Intelligence</p>
+        <p>&copy; 2025 CognalysIntelligence × IARA - Repensons vos systèmes avec Intelligence</p>
         <p>Solution chatbot intelligente sur infrastructure privée sécurisée</p>
     </footer>
 
