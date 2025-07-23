@@ -256,6 +256,30 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Pré-questions */
+        .pre-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            justify-content: center;
+        }
+
+        .pre-question {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 0.6rem 1rem;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .pre-question:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         .chat-input-container {
             padding: 1rem;
             background: rgba(255, 255, 255, 0.1);
@@ -632,7 +656,7 @@
             filter: drop-shadow(0 4px 15px rgba(0,0,0,0.25));
         }
         .replace-word {
-            color: #3E7CE0;
+            color:#E1D8F2;
             font-weight: 700;
             font-style: italic;
         }
@@ -691,6 +715,11 @@
                         👋 Bonjour ! Je suis l'assistant IARA. Comment puis-je vous aider aujourd'hui ?
                     </div>
                 </div>
+                <div class="pre-questions" id="preQuestions">
+                    <button class="pre-question">L’application est-elle vraiment gratuite ?</button>
+                    <button class="pre-question">Y a-t-il des commissions ou frais cachés en plus du forfait iara ?</button>
+                    <button class="pre-question">Mes client(e)s recevront-ils/elles bien des rappels (e-mail, SMS, notifications) avant chaque rendez-vous ?</button>
+                </div>
                 <div class="typing-indicator" id="typingIndicator">
                     <div class="typing-dots">
                         <div class="typing-dot"></div>
@@ -710,7 +739,7 @@
     <section class="about-section">
         <div class="about-container">
             <h2>Qui sommes-nous&nbsp;?</h2>
-            <p>Nous sommes une agence spécialisée dans le développement de solutions d’automatisation sur mesure, enrichies par l’intelligence artificielle. Nous concevons et intégrons des systèmes personnalisés répondant précisément à vos besoins métiers : automatisation comptable, gestion intelligente des relances, secrétariat virtuel optimisé ou encore gestion avancée des plannings avec des agents IA. Notre objectif est de transformer vos processus internes pour gagner en efficacité et en productivité.</p>
+            <p>Nous sommes une agence spécialisée dans le développement de solutions d’automatisation sur mesure enrichies par l’intelligence artificielle. Nous concevons et intégrons des systèmes personnalisés répondant précisément à vos besoins métiers : automatisation comptable, gestion intelligente des relances, secrétariat virtuel optimisé ou encore gestion avancée des plannings avec des agents IA. Notre objectif est de transformer vos processus internes pour gagner en efficacité et en productivité.</p>
         </div>
     </section>
 
@@ -752,7 +781,7 @@
 
         <div class="offer-section">
             <h3>🎁 Offre Spéciale pour IARA</h3>
-            <p>Nous vous proposons de créer gratuitement un chatbot personnalisé avec vos données (FAQ, informations de votre site, etc.) pour une phase de test complète. Tout reste sur notre infrastructure privée - aucun impact sur vos systèmes. Si les résultats vous convainquent, nous discuterons ensemble de l'intégration définitive.</p>
+            <p>Nous vous proposons de créer gratuitement un chatbot personnalisé avec vos données (FAQ, informations de votre site, etc.) pour une phase de test complète. Tout reste sur notre infrastructure privée aucun impact sur vos systèmes. Si les résultats vous convainquent, nous discuterons ensemble de l'intégration définitive.</p>
             <br>
             <p><strong>📋 Bonus :</strong> Résumés automatiques des questions/plaintes clients les plus fréquentes pour améliorer continuellement votre service.</p>
         </div>
@@ -775,11 +804,29 @@
         const sendButton = document.getElementById('sendButton');
         const typingIndicator = document.getElementById('typingIndicator');
 
+        // Fonction de formatage des messages du bot
+        function formatMessage(raw) {
+            // Échapper les caractères HTML pour éviter les injections
+            const escaped = raw
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+            // Gras avec **texte** et sauts de ligne avec //n
+            return escaped
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\/\/n/g, '<br>')
+                .replace(/\n/g, '<br>');
+        }
+
         // Fonction pour ajouter un message au chat
         function addMessage(content, isUser = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
-            messageDiv.textContent = content;
+            if (isUser) {
+                messageDiv.textContent = content;
+            } else {
+                messageDiv.innerHTML = formatMessage(content);
+            }
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -826,6 +873,8 @@
 
         // Fonction pour envoyer un message
         async function sendMessage() {
+            const preQ = document.getElementById('preQuestions');
+            if (preQ) preQ.style.display = 'none';
             const message = chatInput.value.trim();
             if (!message) return;
 
@@ -1071,6 +1120,19 @@
             
             // Initialiser le chat
             initializeChat();
+
+            // Gestion des pré-questions
+            const preQuestions = document.getElementById('preQuestions');
+            if (preQuestions) {
+                preQuestions.addEventListener('click', (e) => {
+                    if (e.target && e.target.classList.contains('pre-question')) {
+                        const question = e.target.textContent.trim();
+                        chatInput.value = question;
+                        sendMessage();
+                        preQuestions.style.display = 'none';
+                    }
+                });
+            }
             
             // Vérifier la connexion périodiquement
             setInterval(checkConnection, 60000); // Chaque minute
